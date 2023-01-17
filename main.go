@@ -4,8 +4,10 @@ import (
 	// DATABASE
 	"database/sql"
 	"final-project/database"
+	"final-project/routers"
 	"final-project/service"
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
 
@@ -36,9 +38,9 @@ func main() {
 		fmt.Println("Succesfully load environment.")
 	}
 	// Connecting Database
-	// railwayInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	db, err = sql.Open("postgres", psqlInfo)
+	railwayInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", os.Getenv("PGHOST"), os.Getenv("PGPORT"), os.Getenv("PGUSER"), os.Getenv("PGPASSWORD"), os.Getenv("PGDATABASE"))
+	// psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	db, err = sql.Open("postgres", railwayInfo)
 	if err != nil {
 		fmt.Println("DB Connection Failed.")
 		panic(err)
@@ -52,5 +54,5 @@ func main() {
 	fmt.Println("Successfully connected to database")
 	database.DbMigrate(db)
 	defer db.Close()
-
+	routers.StartServer().Run("localhost:8000")
 }
