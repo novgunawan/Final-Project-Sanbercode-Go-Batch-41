@@ -56,5 +56,5 @@ func main() {
 	fmt.Println("Successfully connected to database")
 	database.DbMigrate(db)
 	defer db.Close()
-	routers.StartServer().Run(os.Getenv("PORT"))
+	routers.StartServer().Run(":" + os.Getenv("PORT"))
 }
