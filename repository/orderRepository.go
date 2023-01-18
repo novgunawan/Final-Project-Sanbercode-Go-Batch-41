@@ -36,7 +36,7 @@ func GetActiveOrderResto(db *sql.DB, restoID int, status string, order model.Ord
 
 func GetActiveOrderCustomer(db *sql.DB, custID int, status string, order model.Orders) (result model.Orders, errs error) {
 	var foodJSONString string
-	sql := `SELECT id, cust_id, resto_id, status, food FROM orders WHERE resto_id = $1 AND status = $2`
+	sql := `SELECT id, cust_id, resto_id, status, food FROM orders WHERE cust_id = $1 AND status = $2`
 	err := db.QueryRow(sql, custID, status).Scan(&order.ID, &order.CustomerID, &order.RestoID, &order.Status, &foodJSONString)
 	json.Unmarshal([]byte(foodJSONString), &order.Food)
 

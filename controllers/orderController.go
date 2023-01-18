@@ -75,13 +75,13 @@ func GetActiveOrderCustomer(ctx *gin.Context) {
 	var stringCustomerID = ctx.Param("id")
 	customerID, _ := strconv.Atoi(stringCustomerID)
 	var status = ctx.Param("status")
-	order, err := repository.GetActiveOrderResto(database.Connection, customerID, status, order)
+	order, err := repository.GetActiveOrderCustomer(database.Connection, customerID, status, order)
 	if err != nil {
 		result = gin.H{
 			"success": false,
 			"message": "Error in finding active order.",
 		}
-		ctx.JSON(http.StatusCreated, result)
+		ctx.JSON(http.StatusNotFound, result)
 
 	} else {
 		result = gin.H{

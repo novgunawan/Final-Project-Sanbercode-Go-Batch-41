@@ -21,7 +21,7 @@ func StartServer() *gin.Engine {
 	authorizedCustomer.GET("/customer/foods", controllers.GetAllFood)
 
 	authorizedCustomer.GET("/customer/verify/:phoneNumber", controllers.VerifyCustomer)
-	authorizedCustomer.GET("/customer/:id/order/:status", controllers.GetActiveOrderResto)
+	authorizedCustomer.GET("/customer/:id/order/:status", controllers.GetActiveOrderCustomer)
 
 	authorizedResto.GET("/restaurant/verify/:phoneNumber", controllers.VerifyRestaurant)
 	authorizedResto.GET("/restaurant/:id/order/:status", controllers.GetActiveOrderResto)
