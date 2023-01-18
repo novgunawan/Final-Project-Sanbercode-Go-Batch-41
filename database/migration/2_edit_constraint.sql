@@ -1,0 +1,40 @@
+-- +migrate Up
+-- +migrate StatementBegin
+
+ALTER TABLE orders 
+DROP CONSTRAINT fk_cust_id;
+
+ALTER TABLE orders 
+DROP CONSTRAINT fk_resto_id;
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_cust_id
+FOREIGN KEY (cust_id)
+REFERENCES customer(id)
+ON DELETE CASCADE
+ON UPDATE SET DEFAULT; 
+
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_resto_id
+FOREIGN KEY (resto_id)
+REFERENCES restaurant(id)
+ON DELETE CASCADE
+ON UPDATE SET DEFAULT;
+
+ALTER TABLE customer
+ADD CONSTRAINT fk_order_id
+FOREIGN KEY (order_id)
+REFERENCES orders(id)
+ON DELETE SET NULL
+ON UPDATE SET DEFAULT;
+
+
+ALTER TABLE restaurant
+ADD CONSTRAINT fk_order_id
+FOREIGN KEY (order_id)
+REFERENCES orders(id)
+ON DELETE SET NULL
+ON UPDATE SET DEFAULT;
+
+-- +migrate StatementEnd

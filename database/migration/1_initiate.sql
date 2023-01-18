@@ -46,4 +46,5 @@ CREATE TABLE orders (
   FOREIGN KEY (resto_id) REFERENCES restaurant(id)
 );
 
+
 -- +migrate StatementEnd

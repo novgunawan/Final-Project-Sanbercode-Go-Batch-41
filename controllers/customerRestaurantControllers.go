@@ -10,6 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const SecretKey = "ThisIsMySecretKey"
+
 func VerifyCustomer(ctx *gin.Context) {
 	var result gin.H
 	var customer model.Customers
