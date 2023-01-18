@@ -88,7 +88,7 @@ func GetActiveOrderCustomer(ctx *gin.Context) {
 			"success": true,
 			"result":  order,
 		}
-		ctx.JSON(http.StatusNotFound, result)
+		ctx.JSON(http.StatusOK, result)
 
 	}
 
