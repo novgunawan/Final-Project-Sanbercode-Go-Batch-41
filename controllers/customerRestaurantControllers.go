@@ -14,27 +14,11 @@ func VerifyCustomer(ctx *gin.Context) {
 	var result gin.H
 	var customer model.Customers
 	var phoneNumber = ctx.Param("phoneNumber")
-	// if err := ctx.ShouldBindJSON(&body); err != nil {
-	// 	result = gin.H{
-	// 		"error":   err.Error(),
-	// 		"message": "Invalid input",
-	// 	}
-	// 	ctx.AbortWithStatusJSON(http.StatusBadRequest, result)
-	// }
-
-	// if !condition {
-	// 	ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-	// 		"error":   "data not found",
-	// 		"message": fmt.Sprintf("customer with phone number %s is not found", body.PhoneNumber),
-	// 	})
-	// 	return
-	// }
-	err := repository.VerifyCustomer(database.Connection, phoneNumber, customer)
-	// service.CheckError(err)
+	customer, err := repository.VerifyCustomer(database.Connection, phoneNumber, customer)
 	if err == nil {
 		result = gin.H{
 			"success": true,
-			"message": "Customer with number" + phoneNumber + " is found.",
+			"message": "Customer with number " + phoneNumber + " is found.",
 			"result":  customer,
 		}
 		ctx.JSON(http.StatusCreated, result)
@@ -42,7 +26,7 @@ func VerifyCustomer(ctx *gin.Context) {
 	} else {
 		result = gin.H{
 			"success": false,
-			"error":   err,
+			"error":   "Customer with number " + phoneNumber + " isn't found.",
 		}
 		ctx.JSON(http.StatusNotFound, result)
 	}
@@ -81,4 +65,26 @@ func InsertRestaurant(ctx *gin.Context) {
 		"result":  restaurant,
 	}
 	ctx.JSON(http.StatusCreated, result)
+}
+
+func VerifyRestaurant(ctx *gin.Context) {
+	var result gin.H
+	var restaurant model.Restaurants
+	var phoneNumber = ctx.Param("phoneNumber")
+	restaurant, err := repository.VerifyRestaurant(database.Connection, phoneNumber, restaurant)
+	if err == nil {
+		result = gin.H{
+			"success": true,
+			"message": "Restaurant with number " + phoneNumber + " is found.",
+			"result":  restaurant,
+		}
+		ctx.JSON(http.StatusCreated, result)
+
+	} else {
+		result = gin.H{
+			"success": false,
+			"error":   "Restaurant with number " + phoneNumber + " isn't found.",
+		}
+		ctx.JSON(http.StatusNotFound, result)
+	}
 }

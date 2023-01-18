@@ -16,12 +16,11 @@ func StartServer() *gin.Engine {
 	router.GET("/customer/foods", controllers.GetAllFood)
 
 	router.GET("/customer/verify/:phoneNumber", controllers.VerifyCustomer)
-	router.POST("/customer", controllers.InsertCustomer)
-	// POST
-	// router.POST("/customer/verify", controllers.VerifyCustomer)
-	// router.POST("/restaurant/verify", controllers.VerifyRestaurant)
+	router.GET("/restaurant/verify/:phoneNumber", controllers.VerifyRestaurant)
 
-	// router.POST("/customer", controllers.CreateCustomer)
+	// POST
+
+	router.POST("/customer", controllers.InsertCustomer)
 	router.POST("/restaurant", controllers.InsertRestaurant)
 	router.POST("/restaurant/insert-food", controllers.InsertFood)
 
